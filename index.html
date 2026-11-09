@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#101513" />
+  <link rel="icon" href="data:," />
+  <title>AFTER THE FALL — A survival story</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="game-shell">
+    <canvas id="world" aria-label="After the Fall game world"></canvas>
+    <div class="vignette"></div>
+    <header class="topbar">
+      <a class="wordmark" href="#" aria-label="After the Fall home"><span class="mark">A</span><span>AFTER<br><b>THE FALL</b></span></a>
+      <div class="chapter-label"><span class="live-dot"></span><span id="chapter-name">CHAPTER 01</span><i></i><span id="zone-name">ASHLINE DISTRICT</span></div>
+      <button class="icon-button sound-toggle" id="sound-toggle" aria-label="Toggle sound" title="Toggle ambience">♫</button>
+      <button class="icon-button pause-toggle" id="pause-toggle" aria-label="Pause game" title="Pause">Ⅱ</button>
+    </header>
+    <section class="game-hud" id="game-hud" aria-live="polite">
+      <div class="hud-left">
+        <div class="survivor-card">
+          <div class="portrait"><span>D</span><small>27</small></div>
+          <div class="survivor-info"><span class="eyebrow">SURVIVOR</span><strong>DANIEL REED</strong><span class="dayline">DAY 2,191 <i>·</i> 06:42 AM</span></div>
+          <div class="status-bars"><div class="bar-row"><span>VITALS</span><div class="bar"><i id="health-fill" class="health-fill"></i></div><b id="health-value">82</b></div><div class="bar-row"><span>STAMINA</span><div class="bar"><i id="stamina-fill" class="stamina-fill"></i></div><b id="stamina-value">100</b></div></div>
+        </div>
+        <div class="inventory-strip" id="inventory-strip">
+          <div class="inventory-label">FIELD KIT <span id="weight-label">04 / 12</span></div>
+          <div class="item-slots"><div class="item-slot active" title="Improvised blade"><span>⌁</span><small>1</small></div><div class="item-slot" title="Bandage"><span>＋</span><small id="bandage-count">1</small></div><div class="item-slot" title="Canned food"><span>▤</span><small id="food-count">1</small></div><div class="item-slot" title="Scrap"><span>◇</span><small id="scrap-count">0</small></div></div>
+        </div>
+      </div>
+      <div class="hud-right">
+        <div class="objective-card"><div class="objective-top"><span class="eyebrow"><i class="objective-dot"></i> CURRENT OBJECTIVE</span><span class="distance" id="distance">— M</span></div><strong id="objective-title">Find the signal source</strong><p id="objective-copy">Reach the old relay station. Stay quiet.</p><div class="objective-progress"><i id="objective-progress"></i></div></div>
+        <div class="threat-card"><span class="threat-icon">◉</span><div><span class="eyebrow">THREAT LEVEL</span><strong id="threat-label">LOW · UNSEEN</strong></div><div class="threat-pips"><i></i><i></i><i></i><i></i></div></div>
+      </div>
+      <div class="location-tag"><span class="location-cross">✳</span><div><span class="eyebrow">CURRENT LOCATION</span><strong id="location-label">THE FLOODED BLOCK</strong></div><span class="location-sep"></span><span id="weather-label">LIGHT RAIN · 6°C</span></div>
+      <div class="interaction-prompt" id="interaction-prompt"><span class="keycap">E</span><span id="prompt-copy">SEARCH SUPPLY CRATE</span></div>
+      <div class="toast" id="toast"></div>
+    </section>
+    <div class="crosshair" id="crosshair"><span></span></div>
+    <section class="start-screen" id="start-screen">
+      <div class="start-grain"></div>
+      <div class="start-copy"><span class="eyebrow"><i class="objective-dot"></i> A STORY OF WHAT WE KEEP</span><h1>AFTER<br><em>THE FALL</em></h1><p class="start-deck">Six years after the end, one voice<br>could still bring him home.</p><div class="start-meta"><span>AN INTERACTIVE SURVIVAL STORY</span><span>01 <i>/</i> 04</span></div><button class="primary-button" id="start-button"><span>ENTER THE RUINS</span><b>↗</b></button><div class="start-controls">WASD <i>MOVE</i><span>·</span> E <i>INTERACT</i><span>·</span> SHIFT <i>SNEAK</i></div></div>
+      <div class="start-footer"><span>YEAR 6 · DAY 2,191</span><span>NO ONE IS COMING</span></div>
+    </section>
+    <section class="dialogue-overlay hidden" id="dialogue-overlay" role="dialog" aria-modal="true"><div class="dialogue-card"><div class="dialogue-kicker"><span class="objective-dot"></span><span id="dialogue-speaker">UNKNOWN TRANSMISSION</span><span class="dialogue-time">06:42 AM</span></div><h2 id="dialogue-title">A voice in the static.</h2><p id="dialogue-text"></p><div class="choice-list" id="choice-list"></div><div class="dialogue-note">YOUR CHOICES SHAPE WHAT COMES NEXT <span>↗</span></div></div></section>
+    <section class="pause-overlay hidden" id="pause-overlay"><div class="pause-card"><span class="eyebrow">SURVIVAL LOG · DAY 2,191</span><h2>TAKE A BREATH.</h2><p>The city won't wait forever.</p><button class="primary-button" id="resume-button"><span>BACK TO THE STREETS</span><b>↗</b></button><button class="quiet-button" id="restart-button">RESTART THIS CHAPTER</button><div class="pause-controls">WASD / ARROWS <span>MOVE</span><br>E <span>INTERACT</span><br>SHIFT <span>SNEAK</span><br>SPACE <span>SHOVE INFECTED</span><br>1 <span>USE BANDAGE</span></div></div></section>
+    <div class="mobile-controls" id="mobile-controls"><div class="dpad"><button data-move="up" aria-label="Move up">▲</button><div><button data-move="left" aria-label="Move left">◀</button><button data-move="down" aria-label="Move down">▼</button><button data-move="right" aria-label="Move right">▶</button></div></div><div class="mobile-actions"><button id="mobile-sneak">SNEAK</button><button id="mobile-interact" class="action-main">USE</button></div></div>
+    <div class="screen-edge"></div>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
